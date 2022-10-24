@@ -1,0 +1,7 @@
+For the symbol table I implemented a HashTable ADT that will be used for identifiers and constants.
+The hash method will compute the hash value for a specific key.
+The add method will add a new key to the hash table, if it doesn't exist, and return the position of the key in the ST,
+otherwise it will throw an exception.
+The getPosition will return the position of a key in the table.
+The getFromPosition method will retrieve the key from a specific position, or will throw an error if the position is invalid.
+The containsKey method will return true if a specific key can be found in the table, or false otherwise.
