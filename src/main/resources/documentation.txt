@@ -6,3 +6,9 @@ otherwise it will throw an exception.
 The getPosition will return the position of a key in the table.
 The getFromPosition method will retrieve the key from a specific position, or will throw an error if the position is invalid.
 The containsKey method will return true if a specific key can be found in the table, or false otherwise.
+
+
+The scanner has a while that will loop until the current index reaches the end of the program code. At each step it will
+skip the comments and white spaces then it will try to treat the following substring as a token, identifier, number constant
+or string constant. When the scanner finds any of these, it will add them to the pif and also in the symbol table, if it
+is the case (for identifier and constants).
