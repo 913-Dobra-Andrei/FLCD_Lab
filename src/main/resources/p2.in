@@ -1,0 +1,16 @@
+{
+    number x;
+    number y;
+    number gcd;
+    read(x);
+    read(y);
+    while(x!=y){
+        if(x>y){
+           x = x - y;
+        }
+        else{
+            x = x - y;
+        }
+    }
+    write(x);
+}

@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 
 public class HashTable {
-    private ArrayList<ArrayList<String>> table;
-    private int size;
+    private final ArrayList<ArrayList<String>> table;
+    private final int size;
+
+    public ArrayList<ArrayList<String>> getTable() {
+        return table;
+    }
 
     public HashTable(int size) {
         this.size = size;
@@ -27,7 +31,7 @@ public class HashTable {
     public Pair<Integer, Integer> add(String key) {
         int hash = this.hash(key);
         if (containsKey(key)) {
-            throw new RuntimeException(String.format("Key %s already exists!",key));
+            return getPosition(key);
         }
         this.table.get(hash).add(key);
         return new Pair<>(hash, table.get(hash).size() - 1);
@@ -50,5 +54,8 @@ public class HashTable {
     public boolean containsKey(String key) {
         return table.get(hash(key)).contains(key);
     }
+
+
+
 
 }

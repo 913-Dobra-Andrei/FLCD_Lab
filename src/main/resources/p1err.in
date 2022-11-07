@@ -1,0 +1,9 @@
+{
+    number 1a;
+    number b;$
+    number sum;
+    read(a);
+    read(b);
+    sum = a+b;
+    write(sum);
+}

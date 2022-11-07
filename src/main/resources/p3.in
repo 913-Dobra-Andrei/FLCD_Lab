@@ -1,0 +1,13 @@
+{
+    number n;
+    number x;
+    number sum;
+    sum = 0;
+    read(n);
+    while(n>0){
+        read(x);
+        sum = sum + x;
+        n = n - 1;
+    }
+    write(sum);
+}
