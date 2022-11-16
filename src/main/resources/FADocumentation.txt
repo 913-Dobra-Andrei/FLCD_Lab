@@ -1,0 +1,16 @@
+checkSequence(List<String> sequence): checks if the finite automata accepts the sequence by going from state to state for
+each letter in the sequence.
+
+checkSequence(String sequence): splits the sequence into characters and calls the checkSequence(List<String> sequence) method.
+
+digit = 0|1|..|9
+letter = a|b|..|z|A|B..|Z
+character = letter | digit
+firstLine = "states = " {character} {" " character}
+secondLine = "initialState = " {character}
+thirdLine = "finalStates =" {character} {" " character}
+fourthLine = "alphabet =" {character} {" " character}
+fifthLine = "transitions =\n"
+triple = {character} " " {character} " " {character} "\n"
+transitions = fifthLine triple {triple}
+inputFile = firstLine "\n" secondLine "\n" thirdLine "\n" fourthLine "\n" transitions

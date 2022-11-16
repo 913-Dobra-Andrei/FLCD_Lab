@@ -12,3 +12,10 @@ The scanner has a while that will loop until the current index reaches the end o
 skip the comments and white spaces then it will try to treat the following substring as a token, identifier, number constant
 or string constant. When the scanner finds any of these, it will add them to the pif and also in the symbol table, if it
 is the case (for identifier and constants).
+skipComments(): will check if there is a comment starting at the current index and will skip it
+skipWhiteSpaces(): checks if there is a white space at the current index, will skip it and check again
+treatIdentifier(): checks if there is an identifier starting at the current index and adds it to the symbol table and pif.
+treatStringConstant(): checks if there is a string constant starting at the current index and adds it to the symbol table and pif.
+treatNumberConstant(): checks if there is a number constant starting at the current index and adds it to the symbol table and pif.
+treatToken(): checks if there is a token starting at the current index and adds it to the pif.
+

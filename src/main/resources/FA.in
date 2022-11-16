@@ -1,0 +1,9 @@
+states = q p
+initialState = q
+finalStates = q
+alphabet = 0 1
+transitions =
+q q 0
+q p 1
+p q 0
+p p 1
