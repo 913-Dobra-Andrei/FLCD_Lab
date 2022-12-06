@@ -1,0 +1,8 @@
+nonterminals = S R B
+terminals = a b
+start_symbol = S
+production_set =
+S = b R
+R = a R
+R = a B
+B = b
