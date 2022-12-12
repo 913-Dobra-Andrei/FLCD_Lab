@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Grammar {
@@ -29,6 +30,10 @@ public class Grammar {
         this.file = fileName;
         productionRules = new HashMap<>();
         readFromFile();
+    }
+
+    public String getStartSymbol() {
+        return startSymbol;
     }
 
     private void readFromFile() throws IOException {

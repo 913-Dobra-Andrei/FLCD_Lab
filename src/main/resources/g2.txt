@@ -1,5 +1,5 @@
-nonterminals = Program Stmt SimpleStmt IOStmt Condition Assignment Expression SimpleExpression Operator Relation IfStmt WhileStmt SimpleType ArrayDecl Declaration Decllist Constant NumberConstant StringConstant Char ChatSeq Digit Letter DigitSeq Sign
-terminals = epsilon 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z + - * / = < <= == >= > != ( ) [ ] { } ; " number string array read write if else while
+nonterminals = Program Stmt SimpleStmt IOStmt Condition Assignment Expression Expression` SimpleExpression Operator Relation IfStmt WhileStmt SimpleType ArrayDecl Declaration Decllist Constant NumberConstant StringConstant Char CharSeq Digit Letter DigitSeq Sign Identifier NonZeroDigit
+terminals = epsilon 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ? ! + - * / = < <= == >= > != ( ) [ ] { } ; " number string array read write if else while
 start_symbol = Program
 production_set =
 Program = { Decllist ; Stmt }
@@ -36,9 +36,9 @@ Relation = !=
 IfStmt = if ( Condition ) { Stmt } else { Stmt }
 Ifstmt = if ( Condition ) { Stmt }
 WhileStmt = while ( Condition ) { Stmt }
-SimpleType = char
 SimpleType = string
-ArrayDecl = Type [ Number ]  Identifier ;
+SimpleType = number
+ArrayDecl = SimpleType [ NumberConstant ] Identifier ;
 Declaration = SimpleType Identifier
 Declaration = ArrayDecl
 Decllist = Declaration
