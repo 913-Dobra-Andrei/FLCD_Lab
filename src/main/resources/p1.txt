@@ -1,0 +1,19 @@
+{
+    number x;
+    number y;
+    number z;
+    read(x);
+    read(y);
+    read(z);
+    number maximum;
+    if(x>y){
+        maximum = x;
+    }
+    else{
+        maximum = y;
+    }
+    if(maximum < z){
+        maximum = z;
+    }
+    write(maximum);
+}

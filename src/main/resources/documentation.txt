@@ -1,0 +1,21 @@
+class Parser
+     First(X): If there is a variable, and from that variable, if we try to drive all the strings then the beginning Terminal Symbol is called the First
+               params: X - symbol to find first of
+     Follow(X): What is the Terminal Symbol which follows a variable in the process of derivation
+               params: X - symbol to find follow of
+     initTable(): initialize the parsing table with "-" values
+     constructParsingTable(): Construct the parsing table using the algorithm:
+         Step 1:  First check all the essential conditions mentioned above and go to step 2.
+
+         Step 2: Calculate First() and Follow() for all non-terminals.
+
+         Step 3: For each production A –> α. (A tends to alpha)
+             1.Find First(α) and for each terminal in First(α), make entry A –> α in the table.
+             2.If First(α) contains ε (epsilon) as terminal, then find the Follow(A) and for each terminal in Follow(A), make entry A –>  ε in the table.
+             3.If the First(α) contains ε and Follow(A) contains $ as terminal, then make entry A –>  ε in the table for the $.
+
+     parse(input): parses the input symbol by symbol and verifies if it can be produced by the grammar using the parsing table
+        params: input - The String to be checked if can be produced by the grammar
+
+     parsePIF(file): Takes the prgoram in the form of the symbols from the PIF and verifies if it can be produced by the grammar using the parsing table
+        params: file - The file containing the PIF

@@ -2,7 +2,11 @@ package org.example;
 
 import javafx.util.Pair;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Parser {
 
@@ -14,6 +18,50 @@ public class Parser {
         this.grammar = grammar;
         parsingTable = new ParsingTable();
     }
+
+    public boolean parse(String input) throws Exception {
+
+        Stack<String> stack = new Stack<>();
+
+        input += "$";
+        stack.push("$");
+        stack.push(grammar.getStartSymbol());
+        var currentIndex = 0;
+
+        while (!stack.empty()) {
+
+            String A = stack.peek();
+            var r = input.substring(currentIndex, currentIndex + 1);
+
+            if (grammar.getTerminals().contains(A) || A.equals("$")) {
+                if (A.equals(r)) {
+                    stack.pop();
+                    currentIndex++;
+                } else throw new Exception("Error at " + currentIndex + "-" + r);
+            } else if (grammar.getNonterminals().contains(A)) {
+                if (parsingTable.table.containsKey(new Pair<>(A, r)) && !parsingTable.table.get(new Pair<>(A, r)).equals("-")) {
+                    stack.pop();
+
+                    var production = parsingTable.table.get(new Pair<>(A, r));
+                    var aux = production.split(" = ")[1];
+                    var B = Arrays.stream(aux.substring(1, aux.length() - 1).split(",")).collect(Collectors.toList());
+                    B = B.stream().map(String::trim).collect(Collectors.toList());
+                    Collections.reverse(B);
+                    for (String s : B) {
+                        stack.push(s);
+                    }
+                } else {
+                    throw new Exception("Error at " + currentIndex + "-" + r);
+                }
+
+            }
+        }
+        return true;
+    }
+
+
+
+
 
     public List<String> First(String X) {
 
@@ -27,8 +75,7 @@ public class Parser {
         List<List<String>> productions = grammar.getProductionsOf(X);
 
         for (List<String> production : productions) {
-            if (!first.contains(production.get(0)))
-                first.addAll(First(production.get(0)));
+            if (!first.contains(production.get(0))) first.addAll(First(production.get(0)));
         }
         return first;
     }
@@ -36,8 +83,7 @@ public class Parser {
     public List<String> Follow(String X) {
 
         List<String> follow = new ArrayList<>();
-        if (X.equals(grammar.getStartSymbol()))
-            follow.add("$");
+        if (X.equals(grammar.getStartSymbol())) follow.add("$");
 
 
         var productions = grammar.getProductionsThatContain(X);
@@ -53,8 +99,7 @@ public class Parser {
                     }
                 } else {
                     for (String A : key) {
-                        if (!A.equals(X))
-                            follow.addAll(Follow(A));
+                        if (!A.equals(X)) follow.addAll(Follow(A));
                     }
                 }
             }
@@ -102,7 +147,7 @@ public class Parser {
                         for (String foll : follow) {
                             parsingTable.table.put(new Pair<>(nonTerminal, foll), nonTerminal + " = epsilon");
                             if (foll.equals("$")) {
-                                parsingTable.table.put(new Pair<>(nonTerminal, "&"), nonTerminal + " = epsilon");
+                                parsingTable.table.put(new Pair<>(nonTerminal, "$"), nonTerminal + " = epsilon");
                             }
                         }
                     }
@@ -136,6 +181,55 @@ public class Parser {
         }
 
         return sb.toString();
+    }
+
+    public boolean parsePIF(String file) throws Exception {
+        var lines = Files.readAllLines(Path.of(file));
+        var input = new ArrayList<String>();
+
+        for(String line : lines){
+            input.add(line.split("->")[0].trim());
+        }
+
+
+        Stack<String> stack = new Stack<>();
+
+        input.add("$");
+        stack.push("$");
+        stack.push(grammar.getStartSymbol());
+        var currentIndex = 0;
+
+        while (!stack.empty()) {
+
+            String A = stack.peek();
+            var r = input.get(currentIndex);
+
+            if (grammar.getTerminals().contains(A) || A.equals("$")) {
+                if (A.equals(r)) {
+                    stack.pop();
+                    currentIndex++;
+                } else throw new Exception("Error at " + currentIndex + "-" + r);
+            } else if (grammar.getNonterminals().contains(A)) {
+                if (parsingTable.table.containsKey(new Pair<>(A, r)) && !parsingTable.table.get(new Pair<>(A, r)).equals("-")) {
+                    stack.pop();
+
+                    var production = parsingTable.table.get(new Pair<>(A, r));
+                    var aux = production.split(" = ")[1];
+                    var B = Arrays.stream(aux.substring(1, aux.length() - 1).split(",")).collect(Collectors.toList());
+                    B = B.stream().map(String::trim).collect(Collectors.toList());
+                    Collections.reverse(B);
+                    for (String s : B) {
+                        stack.push(s);
+                    }
+                } else {
+                    throw new Exception("Error at " + currentIndex + "-" + r);
+                }
+
+            }
+        }
+
+
+        return true;
     }
 
 }
